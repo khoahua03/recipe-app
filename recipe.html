@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <a href="index.html" class="btn btn-secondary mb-3">Back to Recipes</a>
+        <div id="recipe-details"></div>
+
+        <!-- Form chỉnh sửa công thức (ẩn mặc định) -->
+        <div id="edit-recipe-form" style="display: none;">
+            <h2>Edit Recipe</h2>
+            <form id="edit-form">
+                <input type="text" id="edit-recipe-name" class="form-control mb-2" placeholder="Recipe Name" required>
+                <input type="text" id="edit-recipe-image" class="form-control mb-2" placeholder="Image URL">
+                <textarea id="edit-recipe-description" class="form-control mb-2" placeholder="Short Description"></textarea>
+                <textarea id="edit-ingredients" class="form-control mb-2" placeholder="Ingredients (comma-separated)" required></textarea>
+                <textarea id="edit-instructions" class="form-control mb-2" placeholder="Instructions" required></textarea>
+                <button type="button" class="btn btn-success" onclick="saveEditedRecipe()">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let recipeIndex;
+
+        function displayRecipeDetails() {
+            let params = new URLSearchParams(window.location.search);
+            recipeIndex = params.get("id");
+
+            let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+            let recipe = recipes[recipeIndex];
+
+            if (!recipe) {
+                document.getElementById("recipe-details").innerHTML = "<p>Recipe not found.</p>";
+                return;
+            }
+
+            document.getElementById("recipe-details").innerHTML = `
+                <h2>${recipe.name}</h2>
+                ${recipe.image ? `<img src="${recipe.image}" class="img-fluid mb-3" alt="Recipe Image">` : ''}
+                <h4>Description</h4>
+                <p>${recipe.description ? recipe.description : "No description available."}</p>
+                <h4>Ingredients</h4>
+                <p>${recipe.ingredients}</p>
+                <h4>Instructions</h4>
+                <p>${recipe.instructions}</p>
+                <button class="btn btn-warning" onclick="editRecipe()">Edit Recipe</button>
+            `;
+        }
+
+        function editRecipe() {
+            let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+            let recipe = recipes[recipeIndex];
+
+            document.getElementById("edit-recipe-name").value = recipe.name;
+            document.getElementById("edit-recipe-image").value = recipe.image;
+            document.getElementById("edit-recipe-description").value = recipe.description;
+            document.getElementById("edit-ingredients").value = recipe.ingredients;
+            document.getElementById("edit-instructions").value = recipe.instructions;
+
+            document.getElementById("edit-recipe-form").style.display = "block";
+        }
+
+        function saveEditedRecipe() {
+            let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+
+            recipes[recipeIndex] = {
+                name: document.getElementById("edit-recipe-name").value,
+                image: document.getElementById("edit-recipe-image").value,
+                description: document.getElementById("edit-recipe-description").value,
+                ingredients: document.getElementById("edit-ingredients").value,
+                instructions: document.getElementById("edit-instructions").value
+            };
+
+            localStorage.setItem("recipes", JSON.stringify(recipes));
+            alert("Recipe updated successfully!");
+            window.location.reload();
+        }
+
+        document.addEventListener("DOMContentLoaded", displayRecipeDetails);
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Spaghetti Carbonara",
+        "image": "images/spaghetti.jpg",
+        "ingredients": "Spaghetti, eggs, bacon, parmesan cheese, black pepper",
+        "instructions": "1. Cook spaghetti. 2. Fry bacon. 3. Mix eggs, cheese, and pepper. 4. Combine everything."
+    },
+    {
+        "name": "Chicken Curry",
+        "image": "images/chicken-curry.jpg",
+        "ingredients": "Chicken, coconut milk, curry powder, onion, garlic, ginger",
+        "instructions": "1. Sauté onion, garlic, ginger. 2. Add chicken. 3. Add curry powder. 4. Pour coconut milk and simmer."
+    },
+    {
+        "name": "Caesar Salad",
+        "image": "images/caesar-salad.jpg",
+        "ingredients": "Romaine lettuce, croutons, parmesan cheese, Caesar dressing",
+        "instructions": "1. Chop lettuce. 2. Add croutons. 3. Sprinkle cheese. 4. Drizzle with dressing and toss."
+    }
+]
